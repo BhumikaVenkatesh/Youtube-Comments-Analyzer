@@ -1,0 +1,7 @@
+emoji==2.10.1
+google_api_python_client==2.117.0
+matplotlib==3.6.2
+streamlit==1.18.1
+vaderSentiment==3.3.2
+vaderSentiment==3.3.2
+altair<5
