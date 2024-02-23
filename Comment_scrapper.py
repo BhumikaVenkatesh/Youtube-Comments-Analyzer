@@ -14,7 +14,6 @@ YOUTUBE_API_VERSION="v3"
 youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, developerKey=DEVELOPER_API_KEY)
 
 
-
 def get_channel_id(video_id):
   video_response = youtube.videos().list(
       part='snippet',
@@ -28,8 +27,6 @@ def get_channel_id(video_id):
 def save_comments_to_file(url):
   video_id=get_video_id(url)
   uploader_channel_id=get_channel_id(video_id)
-
-  # st.write("Fectching Comments...")
   comments=[]
   nextPageToken=None
   while len(comments)<1000:
@@ -51,9 +48,6 @@ def save_comments_to_file(url):
     if not nextPageToken:
       break
 
-  comments[:5]
-
-
   hyperlink_pattern=re.compile(
       r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+')
 
@@ -68,12 +62,9 @@ def save_comments_to_file(url):
     if (any(char.isalnum() for char in comment_text)) and not hyperlink_pattern.search(comment_text):
       if emojis==0 or (text_characters/(text_characters+emojis))>threshold_ratio:
         relevant_comments.append(comment_text)
-
     
-  # print(relevant_comments[:5])
   filename='ytcomments.txt'
   with open(filename,'w',encoding='utf-8') as f:
     for idx, comment in enumerate(relevant_comments):
-      f.write(str(comment)+"\n")
-  # print("Comments stored succesfully")  
+      f.write(str(comment)+"\n")  
 
